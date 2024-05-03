@@ -1,0 +1,9 @@
+{
+  "development": {
+    "username": "root",
+    "password": "yoki",
+    "database": "nodejs",
+    "host": "localhost",
+    "dialect": "mysql"
+  }
+}
