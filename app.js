@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const routes = require('./routes/route');
+require('dotenv').config();
 
 app.listen(3000, () => {
     console.log('API server is running on port 3000');

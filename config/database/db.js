@@ -1,48 +1,29 @@
 const mysql = require('mysql2');
+const { Sequelize } = require('sequelize');
 
+require('dotenv').config();
 
-const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'yoki',
-    database: 'finance_installment'
+const connection = mysql.createConnection({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME
 });
 
-db.connect((err) => {
-    if (err) {
-        res.send(err);
-    } else {
-        console.log('Connected to the database');
-
-        // Perform a query
-        // db.query('SELECT * FROM m_user', (err, results) => {
-        //     if (err) {
-        //         res.send(err);
-        //     } else {
-        //         res.send(results);
-        //     }
-        // });
-    }
+connection.connect(err => {
+  if (err) {
+    console.error('Error connecting to the database: ', err);
+    process.exit(1);
+  }
 });
 
-module.exports = db;
+const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
+    host: process.env.DB_HOST,
+    dialect: 'mysql'
+  });
 
-    
-    // db.connect((err) => {
-    //     if (err) {
-    //         res.send(err);
-    //     }
-    //     module.exports = db.promise();
-    //     // db.query('SELECT * FROM m_user', (err, results) => {
-    //     //     if (err) {
-    //     //         res.send(err);
-    //     //     } else {
-    //     //         res.send(results);
-    //     //     }
-    //     // });
-    //     // console.log('Connected to the database');
-    //     // res.send('Connected to the database');
-
-    // });
-
+module.exports = {
+    connection,
+    sequelize
+  };
 
